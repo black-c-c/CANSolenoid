@@ -6,10 +6,10 @@ CANSolenoid::CANSolenoid(PinName rd, PinName td, int dip)
 {
     _msg.id = (dip * 3) + 1500;
     _msg.len = 3;
-    for(i=0; i<7; i++){
+    for(i=0; i<6; i++){
         a[i] = 0;
         b[i] = 0;
-        if(i<3){
+        if(i<5){
             c[i] = 0;
         }
     }
@@ -20,10 +20,10 @@ CANSolenoid::CANSolenoid(CAN &can_obj, int dip)
 {
     _msg.id = (dip * 3) + 1500;
     _msg.len = 3;
-    for(i=0; i<7; i++){
+    for(i=0; i<6; i++){
         a[i] = 0;
         b[i] = 0;
-        if(i<3){
+        if(i<5){
             c[i] = 0;
         }
     }
@@ -62,48 +62,48 @@ void CANSolenoid::write(int get_data, int switching)
                 a[5] = 1;
                 _msg.data[0] |= 0b00000100;
                 break;
-            case A7:
-                a[6] = 1;
-                _msg.data[0] |= 0b00000010;
-                break;
             case B1:
                 b[0] = 1;
-                _msg.data[0] |= 0b00000001;
+                _msg.data[0] |= 0b00000010;
                 break;
             case B2:
                 b[1] = 1;
-                _msg.data[1] |= 0b10000000;
+                _msg.data[0] |= 0b00000001;
                 break;
             case B3:
                 b[2] = 1;
-                _msg.data[1] |= 0b01000000;
+                _msg.data[1] |= 0b10000000;
                 break;
             case B4:
                 b[3] = 1;
-                _msg.data[1] |= 0b00100000;
+                _msg.data[1] |= 0b01000000;
                 break;
             case B5:
                 b[4] = 1;
-                _msg.data[1] |= 0b00010000;
+                _msg.data[1] |= 0b00100000;
                 break;
             case B6:
                 b[5] = 1;
-                _msg.data[1] |= 0b00001000;
-                break;
-            case B7:
-                b[6] = 1;
-                _msg.data[1] |= 0b00000100;
+                _msg.data[1] |= 0b00010000;
                 break;
             case C1:
                 c[0] = 1;
-                _msg.data[1] |= 0b00000010;
+                _msg.data[1] |= 0b00001000;
                 break;
             case C2:
                 c[1] = 1;
-                _msg.data[1] |= 0b00000001;
+                _msg.data[1] |= 0b00000100;
                 break;
             case C3:
                 c[2] = 1;
+                _msg.data[1] |= 0b10000010;
+                break;
+            case C4:
+                c[3] = 1;
+                _msg.data[1] |= 0b00000001;
+                break;
+            case C5:
+                c[4] = 1;
                 _msg.data[2] |= 0b10000000;
                 break;
         }
@@ -145,70 +145,70 @@ void CANSolenoid::write(int get_data, int switching)
                     a[5] = 0;
                 }
                 break;
-            case A7:
-                if(a[6]){
-                    _msg.data[0] -= 0b00000010;
-                    a[6] = 0;
-                }
-                break;
             case B1:
                 if(b[0]){
-                    _msg.data[0] -= 0b00000001;
+                    _msg.data[0] -= 0b00000010;
                     b[0] = 0;
                 }
                 break;
             case B2:
                 if(b[1]){
-                    _msg.data[1] -= 0b10000000;
+                    _msg.data[0] -= 0b00000001;
                     b[1] = 0;
                 }
                 break;
             case B3:
                 if(b[2]){
-                    _msg.data[1] -= 0b01000000;
+                    _msg.data[1] -= 0b10000000;
                     b[2] = 0;
                 }
                 break;
             case B4:
                 if(b[3]){
-                    _msg.data[1] -= 0b00100000;
+                    _msg.data[1] -= 0b01000000;
                     b[3] = 0;
                 }
                 break;
             case B5:
                 if(b[4]){
-                    _msg.data[1] -= 0b00010000;
+                    _msg.data[1] -= 0b00100000;
                     b[4] = 0;
                 }
                 break;
             case B6:
                 if(b[5]){
-                    _msg.data[1] -= 0b00001000;
+                    _msg.data[1] -= 0b00010000;
                     b[5] = 0;
-                }
-                break;
-            case B7:
-                if(b[6]){
-                    _msg.data[1] -= 0b00000100;
-                    b[6] = 0;
                 }
                 break;
             case C1:
                 if(c[0]){
-                    _msg.data[1] -= 0b00000010;
+                    _msg.data[1] -= 0b00001000;
                     c[0] = 0;
                 }
                 break;
             case C2:
                 if(c[1]){
-                    _msg.data[1] -= 0b00000001;
+                    _msg.data[1] -= 0b00000100;
                     c[1] = 0;
                 }
                 break;
             case C3:
                 if(c[2]){
-                    _msg.data[2] -= 0b10000000;
+                    _msg.data[1] -= 0b00000010;
                     c[2] = 0;
+                }
+                break;
+            case C4:
+                if(c[3]){
+                    _msg.data[1] -= 0b00000001;
+                    c[3] = 0;
+                }
+                break;
+            case C5:
+                if(c[4]){
+                    _msg.data[2] -= 0b10000000;
+                    c[4] = 0;
                 }
                 break;
         }
