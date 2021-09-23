@@ -36,14 +36,14 @@ public:
         TotalPinDef
     };
     CANSolenoid(PinName rd, PinName td, int dip);
- 
+
     CANSolenoid(CAN &can_obj, int dip);
- 
+
     ~CANSolenoid();
-    
+
     void send();
     void write(int get_data, int switching);
-    
+
 private:
 
     CAN *_can_p;
