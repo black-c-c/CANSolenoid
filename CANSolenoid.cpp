@@ -1,8 +1,6 @@
 #include "mbed.h"
 #include "CANSolenoid.h"
 
-#include <cmath>
-
 CANSolenoid::CANSolenoid(PinName rd, PinName td, int dip)
     : _can_p(new CAN(rd, td)), _can(*_can_p)
 {
