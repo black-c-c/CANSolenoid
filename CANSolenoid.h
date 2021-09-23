@@ -7,9 +7,14 @@ class CANSolenoid
 {
 public:
 
-    enum PinDef {
+    enum Switching {
         OFF,
         ON,
+
+        TotalSwitching
+    };
+
+    enum PinDef {
         A1,
         A2,
         A3,
@@ -26,7 +31,9 @@ public:
         C2,
         C3,
         C4,
-        C5
+        C5,
+
+        TotalPinDef
     };
     CANSolenoid(PinName rd, PinName td, int dip);
  
@@ -43,9 +50,6 @@ private:
     CAN &_can;
     CANMessage _msg;
 
-    int a[6];
-    int b[6];
-    int c[5];
-    int i;
+    int solenoid[TotalPinDef];
 };
 #endif
